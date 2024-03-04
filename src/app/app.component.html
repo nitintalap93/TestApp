@@ -1,29 +1,66 @@
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content below * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * Delete the template below * * * * * * * * * -->
-<!-- * * * * * * * to get started with your project! * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+<div class="container-fluid">
+  <main class="main">
+    <div class="content">
+      <!-- Navbar -->
+      <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <!-- Container wrapper -->
+        <!-- Navbar brand -->
+        <a class="navbar-brand" href="#">Vastav</a>
 
-<style>
-  
-</style>
+        <!-- Collapsible wrapper -->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!-- Left links -->
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li class="nav-item">
+              <a class="nav-link active" routerLink="app" aria-current="page">Back</a>
+            </li>
+            <!-- <li class="nav-item">
+                <a class="nav-link" routerLink="employee" href="#">Case 1</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="hr" href="#">Case 2</a>
+              </li> -->
+          </ul>
+          <!-- Left links -->
+        </div>
 
-<main class="main">
-  <div class="content">
-   
-  </div>
-</main>
+        <!-- Search form -->
+        <form class="d-flex input-group w-auto">
+          <input type="search" class="form-control" placeholder="Type query" aria-label="Search" />
+          <button class="btn btn-outline-primary" type="button">
+            Search
+          </button>
+        </form>
 
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * The content above * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * is only a placeholder * * * * * * * * * * * -->
-<!-- * * * * * * * * * * and can be replaced.  * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * End of Placeholder  * * * * * * * * * * * * -->
-<!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * -->
+        <!-- Collapsible wrapper -->
 
+        <!-- Container wrapper -->
+      </nav>
+      <!-- Navbar -->
+
+      <div class="row ipcSections" *ngIf="ipcSectionShow">
+        <div class="col-lg-12 col-sm-12">
+          <div class="row">
+            <h3>Judgments</h3>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">   
+              <a class="btn btn-success" routerLink="judgment" href="#" (click)="hide_ipcSections()">498a</a>                
+            </div>
+          </div>
+          <div class="clear"></div>
+          <br/>
+          <div class="row">
+            <div class="col-sm-12">
+              <a class="btn btn-success" routerLink="judgment" href="#" (click)="hide_ipcSections()">125 crpc</a>  
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <app-home [myTitle]="title"></app-home> -->
+    <!-- <input type="text" class="form-control" placeholder="Type query" aria-label="Search" [(ngModel)]="title" /> -->
+  </main>
+</div>
 
 <router-outlet />
