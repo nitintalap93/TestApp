@@ -8,6 +8,7 @@ import { FormsModule } from '@angular/forms';
 import { JudgementComponent } from './judgement/judgement.component';
 import { RouterModule } from '@angular/router';
 import { UploadDocsComponent } from './upload-docs/upload-docs.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { UploadDocsComponent } from './upload-docs/upload-docs.component';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    RouterModule
+    RouterModule,
+    HttpClientModule
   ],
   providers: [
     provideClientHydration()
