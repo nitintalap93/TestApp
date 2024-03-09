@@ -1,5 +1,5 @@
 
-<div style="width: 50%; margin: auto;">
+<div style="margin: auto;">
     <div class="clearFix"></div>
     <h4 style=" text-align: center;">Upload File</h4>
     <br />
@@ -7,9 +7,10 @@
         <div class="form-group row">
             <label for="section" class="col-sm-3 col-form-label">Section :</label>
             <div class="col-sm-9">
-                <select class="form-control" id="section">
+                <select class="form-control" id="section" (change)="onChange($event)" required>
+                    <option selected>Select Section</option>
                     <option>498a</option>
-                    <option>125 CRPC</option>
+                    <option>125 crpc</option>
                     <option>Other</option>
                 </select>
             </div>
@@ -18,7 +19,7 @@
         <div class="form-group row">
             <label for="fileName" class="col-sm-3 col-form-label">Choose File : </label>
             <div class="col-sm-9">
-                <input type="file" id="fileName" class="form-control-file" (change)="handleFileInput($event)"
+                <input type="file" id="fileName" class="form-control-file" (click)="isSectionSelected()" (change)="handleFileInput($event)"
                     accept="image/jpeg,image/gif,image/png,application/pdf">
             </div>
         </div>

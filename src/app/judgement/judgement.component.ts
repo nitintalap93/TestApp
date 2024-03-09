@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { DriveAPIsService } from '../services/drive-apis.service';
 import { map } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -10,19 +10,24 @@ import { CommonModule } from '@angular/common';
   standalone:true,
   imports: [CommonModule]
 })
-export class JudgementComponent implements OnInit {
+export class JudgementComponent {
   fileList = [];
+  selectedSection: string = "";
 
   constructor(private driveApis: DriveAPIsService){
     
   }
 
-  ngOnInit(){
-    this.getFileList();
-  }
+  public getFileList(event: any) : void{
 
-  public getFileList() {
-    this.driveApis.getFileList().pipe(map(data => {
+    this.selectedSection = event.target.value;
+
+    if(this.selectedSection == "Select Section" || this.selectedSection == ""){
+      alert("Please select section to fetch judgements.");
+      return;
+    }
+
+    this.driveApis.getFileList(this.selectedSection).pipe(map(data => {
       console.log(data["files"]);
       this.fileList = data["files"];
     })).subscribe({

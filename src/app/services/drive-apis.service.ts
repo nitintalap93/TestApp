@@ -16,22 +16,26 @@ export class DriveAPIsService {
   headers = { 'Authorization': '' };
   authTokenResponse = { "token": "", "expiry": 3597 };
 
-  private publicDriveId : string = "1g4MauXjsoKffu_pA8k-BZpysgA2U9GhN";
+  private publicDriveId : any  = {
+    "498a":"1g4MauXjsoKffu_pA8k-BZpysgA2U9GhN", 
+    "125 crpc":"1--RXMyW5OwB_7buKyb23bTIfw-JWkhpj", 
+    "Other":"0B0J2gt6cI9SSaVNuakpUdnJfdkU"
+  };
 
   constructor(private http: HttpClient, private auth: DriveAuthenticationService) {
     this.getToken();
   }
 
-  getFileList(): Observable<any> {
+  getFileList(selectedSection: string): Observable<any> {
     console.log('--------------Token-----------');
-    console.log(this.headers);
+    console.log(this.headers.Authorization);
     console.log('--------------Token-----------');
 
-    if(this.headers.Authorization == ''){
+    if(this.headers.Authorization == "" || this.headers.Authorization == "Bearer"){
       this.getToken();
     }
 
-    return this.http.get(this.baseUrl + "?fields=" + this.fields, {
+    return this.http.get(this.baseUrl + "?fields=" + this.fields + "&trashed=false&q='"+ this.publicDriveId[selectedSection] +"' in parents", {
       headers: this.headers
     });
   }
@@ -40,7 +44,7 @@ export class DriveAPIsService {
     return this.http.post(this.resumableUploadUrl, {
       'name': fileName,
       'mimeType': mimeType,
-      'parents': [this.publicDriveId]
+      'parents': [this.publicDriveId[selectedFolder]]
     }, {
       headers: this.headers,
       observe: 'response'
@@ -49,9 +53,7 @@ export class DriveAPIsService {
 
   uploadFile(resumableUrl:string, file: File): Observable<any>{
     const formData: FormData = new FormData();
-
     formData.append('file', file, file.name);
-
     return this.http.put(resumableUrl, formData, { headers: this.headers });
   }
 

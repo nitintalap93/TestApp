@@ -7,16 +7,13 @@ import { HomeComponent } from './home/home.component';
 import { FormsModule } from '@angular/forms';
 import { JudgementComponent } from './judgement/judgement.component';
 import { RouterModule } from '@angular/router';
-import { UploadDocsComponent } from './upload-docs/upload-docs.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    UploadDocsComponent
-    
+    HomeComponent
   ],
   imports: [
     BrowserModule,

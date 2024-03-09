@@ -13,13 +13,21 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 export class FileUploadComponent {
   fileToUpload?: FileList;
   resumableUrl:string = "";
-
-  fileName ="";
+  selectedSection: string = "";
+  fileName = "";
   size: number | undefined;
-  mimeType ="";
+  mimeType = "";
 
   constructor(private driveApis: DriveAPIsService){
 
+  }
+
+  isSectionSelected(): boolean {
+    if(this.selectedSection == "Select Section" || this.selectedSection == ""){
+      alert("Please select section first.");
+      return false;
+    }
+    return true;
   }
 
   handleFileInput(event: any) {
@@ -30,7 +38,7 @@ export class FileUploadComponent {
     this.mimeType = fileDetails?.type!;
     console.log(this.fileToUpload?.item(0));
 
-    this.driveApis.getResumableURL(this.fileName, this.mimeType, "498a").pipe(map(data => {
+    this.driveApis.getResumableURL(this.fileName, this.mimeType, this.selectedSection).pipe(map(data => {
       console.log(data.headers.get('location'));
       this.resumableUrl = data.headers.get('location');
     })).subscribe({
@@ -61,5 +69,9 @@ export class FileUploadComponent {
         console.log('Upload completed');
       }
     })
+  }
+
+  onChange(event: any) : void {
+    this.selectedSection = event.target.value;
   }
 }
