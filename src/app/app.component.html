@@ -81,6 +81,15 @@
         </table>
       </div>
 
+      <div class="form-group">
+        <label for="file">Choose File</label>
+        <input type="file"
+               id="file"
+               (change)="handleFileInput($event)">
+               <button class="btn btn-success btn-sm" [disabled]="!fileToUpload" (click)="uploadFile()">
+                Upload
+              </button>
+      </div>
 
     </div>
     <!-- <app-home [myTitle]="title"></app-home> -->

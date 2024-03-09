@@ -1,6 +1,8 @@
 import { Component, OnInit, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy, SimpleChanges, Input, TemplateRef } from '@angular/core';
 import { DriveAPIsService } from './services/drive-apis.service';
-import { Subscription, interval, map } from 'rxjs';
+import { Observable, Subscription, interval, map } from 'rxjs';
+import { Console } from 'console';
+import { EMPTY_OBSERVER } from 'rxjs/internal/Subscriber';
 
 @Component({
   selector: 'app-root',
@@ -13,9 +15,11 @@ export class AppComponent implements OnInit, OnChanges, DoCheck, AfterViewInit, 
   ipcSectionShow: boolean = true;
   tokenInterval: Subscription = new Subscription;
   fileList = [];
+  fileToUpload?: FileList;
+  resumableUrl:string = "";
 
   constructor(private driveApis: DriveAPIsService) {
-    console.log('AppComponent Constructor'); 
+    console.log('AppComponent Constructor');
     // this.tokenInterval = interval(this.driveApis.authTokenResponse.expiry * 1000).subscribe(x=>{this.driveApis.getToken()});
   }
 
@@ -39,7 +43,7 @@ export class AppComponent implements OnInit, OnChanges, DoCheck, AfterViewInit, 
     console.log('AppComponent ngAfterViewChecked');
   }
 
-  ngOnDestroy(): void{
+  ngOnDestroy(): void {
     this.tokenInterval.unsubscribe();
   }
 
@@ -54,6 +58,7 @@ export class AppComponent implements OnInit, OnChanges, DoCheck, AfterViewInit, 
 
   public getFileList() {
     this.driveApis.getFileList().pipe(map(data => {
+      console.log(data["files"]);
       this.fileList = data["files"];
     })).subscribe({
       next(response) {
@@ -86,4 +91,46 @@ export class AppComponent implements OnInit, OnChanges, DoCheck, AfterViewInit, 
   //     }
   //   });
   // }
+
+  handleFileInput(event: any) {
+    this.fileToUpload = event.target.files;
+    let fileDetails = this.fileToUpload?.item(0)!;
+    let fileName = fileDetails?.name!;
+    let size = fileDetails?.size!;
+    let mimeType = fileDetails?.type!;   
+    console.log(this.fileToUpload?.item(0));
+    // this.driveApis.getResumableURL()
+
+    this.driveApis.getResumableURL(fileName, mimeType, "498a").pipe(map(data => {
+      console.log(data.headers.get('location'));
+      this.resumableUrl = data.headers.get('location');
+    })).subscribe({
+      next(response) {
+        console.log('PreResumable URL');
+      },
+      error(err) {
+        console.log('PreResumable url error :' + err);
+      },
+      complete() {
+        console.log('PreResumable Url generated');
+      }
+    })
+
+  }
+
+  public uploadFile(): void {
+    this.driveApis.uploadFile(this.resumableUrl, this.fileToUpload?.item(0)!).pipe(map(data => {
+      return data;
+    })).subscribe({
+      next(response) {
+        console.log('Upload Response');
+      },
+      error(err) {
+        console.log('Upload url error :' + JSON.stringify(err));
+      },
+      complete() {
+        console.log('Upload completed');
+      }
+    })
+  }
 }
