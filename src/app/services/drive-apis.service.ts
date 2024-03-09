@@ -26,6 +26,11 @@ export class DriveAPIsService {
     console.log('--------------Token-----------');
     console.log(this.headers);
     console.log('--------------Token-----------');
+
+    if(this.headers.Authorization == ''){
+      this.getToken();
+    }
+
     return this.http.get(this.baseUrl + "?fields=" + this.fields, {
       headers: this.headers
     });

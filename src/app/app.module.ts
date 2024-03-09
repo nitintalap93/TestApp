@@ -9,20 +9,23 @@ import { JudgementComponent } from './judgement/judgement.component';
 import { RouterModule } from '@angular/router';
 import { UploadDocsComponent } from './upload-docs/upload-docs.component';
 import { HttpClientModule } from '@angular/common/http';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
-    JudgementComponent,
     UploadDocsComponent
+    
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     RouterModule,
-    HttpClientModule
+    JudgementComponent,
+    HttpClientModule,
+    FileUploadComponent
   ],
   providers: [
     provideClientHydration()

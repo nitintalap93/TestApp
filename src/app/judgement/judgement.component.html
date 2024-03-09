@@ -1,3 +1,33 @@
+<div class="row ipcSections">
+    <div class="col-lg-12 col-sm-12">
+        <div class="row">
+            <h3>Judgments</h3>
+        </div>       
+        <div class="clear"></div>
+        <br />
+        <div>
+            <table class="table table-bordered">
+              <thead>
+                <tr>              
+                  <th>Name</th>
+                  <!-- <th>File Type</th>
+                  <th>Size</th> -->
+                  <th>View</th>
+                  <th>Download</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of fileList">
+                  <td>{{item["name"]}}</td>
+                  <!-- <td>{{item["mimeType"]}}</td>
+                  <td>{{item["size"] / 1000  / 1000}} MB</td> -->
+                  <td><a href='{{item["webViewLink"]}}' [attr.fileId]="item['id']">View</a></td>
+                  <td><a href='{{item["webContentLink"]}}' [attr.fileId]="item['id']">Download</a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+    
 
-
-<p>Judgments</p>
+    </div>
+</div>
